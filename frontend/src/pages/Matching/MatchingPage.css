@@ -107,3 +107,14 @@
   position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #fff;
   padding: 12px 22px; border-radius: 999px; box-shadow: var(--shadow-lg); z-index: 50; font-weight: 600;
 }
+
+.match-trip__actions { gap: 10px; flex-wrap: wrap; }
+.match-btn--approve { background: #16a34a; color: #fff; }
+.match-contact { border-radius: 12px; padding: 12px 14px; display: grid; gap: 8px; border: 1px solid; }
+.match-contact--pending { background: #fffbeb; border-color: #fde68a; }
+.match-contact--approved { background: #f0fdf4; border-color: #bbf7d0; }
+.match-contact__title { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; font-weight: 600; }
+.match-contact__title b { font-size: 16px; }
+.match-contact__links, .match-vol__contact { display: flex; gap: 8px 16px; flex-wrap: wrap; font-size: 13px; margin-top: 6px; }
+.match-contact__links a, .match-vol__contact a { color: #0e7490; text-decoration: none; font-weight: 600; }
+.match-contact__links a:hover, .match-vol__contact a:hover { text-decoration: underline; }
