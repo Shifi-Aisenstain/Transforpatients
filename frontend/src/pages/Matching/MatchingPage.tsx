@@ -132,8 +132,11 @@ const MatchingPage: React.FC = () => {
     <div className="match-page" dir="rtl">
       <div className="match-page__header">
         <div>
-          <h1 className="match-page__title">מרכז ההתאמות</h1>
-          <p className="match-page__subtitle">בחרי נסיעה והמערכת תדרג את המתנדבים המתאימים ביותר לפי זמינות, כיוון נסיעה, עיר ומקומות</p>
+          <h1 className="match-page__title">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal-mid)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z" /></svg>
+            מרכז ההתאמות
+          </h1>
+          <p className="match-page__subtitle">התאמת מתנדבים לנסיעות לפי זמינות, כיוון נסיעה, עיר ומקומות</p>
         </div>
         <div className="match-page__stats">
           <div className="match-stat match-stat--warn"><b>{waiting.length}</b><span>ממתינות לשיבוץ</span></div>
@@ -155,7 +158,7 @@ const MatchingPage: React.FC = () => {
               <button className={tab === 'approved' ? 'active' : ''} onClick={() => setTab('approved')}>אושרו ({approved.length})</button>
             </div>
             <div className="match-rides__list">
-              {list.length === 0 && <div className="match-rides__empty">{tab === 'waiting' ? 'כל הנסיעות שובצו 🎉' : tab === 'pending' ? 'אין נסיעות שממתינות לאישור מתנדב' : 'אין נסיעות מאושרות'}</div>}
+              {list.length === 0 && <div className="match-rides__empty">{tab === 'waiting' ? 'כל הנסיעות שובצו' : tab === 'pending' ? 'אין נסיעות שממתינות לאישור מתנדב' : 'אין נסיעות מאושרות'}</div>}
               {list.map(r => (
                 <button key={r.id} className={`match-ride${r.id === selectedId ? ' selected' : ''}`} onClick={() => setSelectedId(r.id)}>
                   <div className="match-ride__when"><b>{time(r.rideTime)}</b><span>{day(r.rideTime)}</span></div>
@@ -208,7 +211,7 @@ const MatchingPage: React.FC = () => {
                       </>
                     ) : (
                       <button className="match-btn match-btn--magic" onClick={autoAssign} disabled={busyId !== null || !matches[0] || matches[0].score === 0}>
-                        ✨ שבץ את ההתאמה הטובה ביותר
+                        שבצי את ההתאמה הטובה ביותר
                       </button>
                     )}
                   </div>

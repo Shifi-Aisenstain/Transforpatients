@@ -121,8 +121,4 @@
   white-space: nowrap;
 }
 
-.sidebar__link--featured {
-  background: linear-gradient(135deg, rgba(124,58,237,.12), rgba(42,157,181,.16));
-  font-weight: 700;
-}
-.sidebar__link--featured .sidebar__icon-wrap { color: #7c3aed; }
+.sidebar__link--featured .sidebar__icon-wrap { color: var(--teal-mid); }
