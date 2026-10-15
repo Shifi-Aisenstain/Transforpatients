@@ -1,8 +1,13 @@
-﻿import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import ridesService from '../../services/rides';
 import familiesService from '../../services/familiesService';
+import volunteersService from '../../services/volunteers';
+import volunteerFreeTimesService from '../../services/volunteerFreeTimesService';
+import { rankVolunteers } from '../../utils/matching';
 import { RideRequest, RideStatus } from '../../models/rideRequest';
 import { Family } from '../../models/family';
+import { Volunteer } from '../../models/volunteer';
+import { Availability } from '../../models/Availability';
 import './RidesPage.css';
 
 const STATUS_LABEL: Record<RideStatus, string> = { 1: 'חדשה', 2: 'בטיפול', 3: 'אושרה' }; const INTERVAL_LABEL: Record<string, string> = { Weekly: 'שבועי', Monthly: 'חודשי' };
@@ -14,6 +19,8 @@ const EMPTY: Partial<RideRequest> = {
 const RidesPage: React.FC = () => {
   const [rides, setRides] = useState<RideRequest[]>([]);
   const [families, setFamilies] = useState<Family[]>([]);
+  const [volunteers, setVolunteers] = useState<Volunteer[]>([]);
+  const [slots, setSlots] = useState<Availability[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
@@ -26,8 +33,8 @@ const RidesPage: React.FC = () => {
 
   const load = () => {
     setLoading(true);
-    Promise.all([ridesService.getRides(), familiesService.getFamilies()])
-      .then(([r, f]) => { setRides(r); setFamilies(f); })
+    Promise.all([ridesService.getRides(), familiesService.getFamilies(), volunteersService.getVolunteers(), volunteerFreeTimesService.getAvailabilities()])
+      .then(([r, f, v, a]) => { setRides(r); setFamilies(f); setVolunteers(v); setSlots(a); })
       .catch(e => setError(e?.message || 'שגיאה בטעינת נסיעות'))
       .finally(() => setLoading(false));
   };
@@ -37,12 +44,33 @@ const RidesPage: React.FC = () => {
   const familyName = (id?: number | null) =>
     id ? (families.find(f => f.id === id)?.lastName ?? `#${id}`) : '—';
 
+  const volunteerName = (id?: number | null) => {
+    const v = id ? volunteers.find(x => x.id === id) : undefined;
+    return v ? `${v.firstName ?? ''} ${v.lastName}`.trim() : null;
+  };
+
+  const familyAddress = (f?: Family) =>
+    f?.address
+      ? [f.address.city, f.address.street && `${f.address.street} ${f.address.houseNumber ?? ''}`.trim()].filter(Boolean).join(', ')
+      : '';
+
+  const selectedFamily = families.find(f => f.id === form.familyId);
+  const matches = useMemo(
+    () => rankVolunteers(volunteers, slots, form.rideTime, selectedFamily?.address?.city, selectedFamily?.numberOfPeople),
+    [volunteers, slots, form.rideTime, selectedFamily]
+  );
+
+  const onFamilyChange = (id: number) => {
+    const fam = families.find(f => f.id === id);
+    setForm(prev => ({ ...prev, familyId: id, origin: prev.origin || familyAddress(fam) }));
+  };
+
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     return rides.filter(r => {
       if (filterStatus && r.status !== filterStatus) return false;
       if (!q) return true;
-      return familyName(r.familyId).toLowerCase().includes(q);
+      return familyName(r.familyId).toLowerCase().includes(q) || (r.destination ?? '').toLowerCase().includes(q);
     });
   }, [rides, families, search, filterStatus]);
 
@@ -54,7 +82,7 @@ const RidesPage: React.FC = () => {
     setForm(prev => ({ ...prev, [field]: value }));
 
   const handleSave = async () => {
-    if (!form.familyId || !form.rideTime) return;
+    if (!form.familyId || !form.rideTime || !form.destination?.trim()) return;
     setSaving(true);
     try {
       if (editTarget) {
@@ -83,7 +111,7 @@ const RidesPage: React.FC = () => {
     }
   };
 
-  const canSave = !!form.familyId && !!form.rideTime;
+  const canSave = !!form.familyId && !!form.rideTime && !!form.destination?.trim();
 
   const formatDate = (iso: string) => {
     const d = new Date(iso);
@@ -130,7 +158,7 @@ const RidesPage: React.FC = () => {
             </svg>
             <input
               className="rides-page__search-input"
-              placeholder="חיפוש לפי שם משפחה..."
+              placeholder="חיפוש לפי שם משפחה או יעד..."
               value={search}
               onChange={e => setSearch(e.target.value)}
               dir="rtl"
@@ -199,13 +227,22 @@ const RidesPage: React.FC = () => {
                         {r.recurringInterval ? INTERVAL_LABEL[r.recurringInterval] : 'נסיעה חוזרת'}
                       </span>
                     )}
-                    {r.volunteerId && (
+                    {r.volunteerId ? (
                       <span className="ride-card__chip">
                         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></svg>
-                        מתנדב שובץ
+                        {volunteerName(r.volunteerId) ?? 'מתנדב שובץ'}
                       </span>
+                    ) : (
+                      <span className="ride-card__chip ride-card__chip--unassigned">ממתינה לשיבוץ מתנדב</span>
                     )}
                   </div>
+                  {(r.origin || r.destination) && (
+                    <div className="ride-card__route">
+                      <span>{r.origin || '—'}</span>
+                      <span className="ride-card__route-arrow">←</span>
+                      <span>{r.destination || '—'}</span>
+                    </div>
+                  )}
                 </div>
 
                 <button className="ride-card__edit-btn" onClick={() => openEdit(r)}>
@@ -240,7 +277,7 @@ const RidesPage: React.FC = () => {
                 <select
                   className="rides-page__input"
                   value={form.familyId ?? ''}
-                  onChange={e => set('familyId', Number(e.target.value))}
+                  onChange={e => onFamilyChange(Number(e.target.value))}
                   dir="rtl"
                 >
                   <option value="">בחר משפחה...</option>
@@ -260,6 +297,68 @@ const RidesPage: React.FC = () => {
                   dir="ltr"
                 />
               </div>
+
+              <div className="rides-page__field">
+                <label className="rides-page__label">מוצא</label>
+                <input
+                  className="rides-page__input"
+                  value={form.origin ?? ''}
+                  onChange={e => set('origin', e.target.value)}
+                  placeholder="כתובת האיסוף (ברירת מחדל: כתובת המשפחה)"
+                  dir="rtl"
+                />
+              </div>
+
+              <div className="rides-page__field">
+                <label className="rides-page__label">יעד <span className="rides-page__req">*</span></label>
+                <input
+                  className="rides-page__input"
+                  value={form.destination ?? ''}
+                  onChange={e => set('destination', e.target.value)}
+                  placeholder="למשל: הדסה עין כרם, מחלקה אונקולוגית"
+                  dir="rtl"
+                />
+              </div>
+
+              {editTarget && (
+                <>
+                  <div className="rides-page__field">
+                    <label className="rides-page__label">סטטוס</label>
+                    <select
+                      className="rides-page__input"
+                      value={form.status ?? 1}
+                      onChange={e => set('status', Number(e.target.value))}
+                      dir="rtl"
+                    >
+                      {([1, 2, 3] as const).map(s => <option key={s} value={s}>{STATUS_LABEL[s]}</option>)}
+                    </select>
+                  </div>
+
+                  <div className="rides-page__field">
+                    <label className="rides-page__label">שיבוץ מתנדב</label>
+                    <select
+                      className="rides-page__input"
+                      value={form.volunteerId ?? ''}
+                      onChange={e => set('volunteerId', e.target.value ? Number(e.target.value) : null)}
+                      dir="rtl"
+                    >
+                      <option value="">ללא מתנדב</option>
+                      {matches.map(m => (
+                        <option key={m.volunteer.id} value={m.volunteer.id}>
+                          {`${m.volunteer.firstName ?? ''} ${m.volunteer.lastName}`.trim()}
+                          {` — ${m.availableAtTime ? 'פנוי/ה בשעה זו' : 'לא פנוי/ה בשעה זו'}`}
+                          {m.sameCity ? ' · אותה עיר' : ''}
+                          {` · ${m.volunteer.availableSeats ?? 0} מושבים`}
+                          {m.enoughSeats ? '' : ' (לא מספיק)'}
+                        </option>
+                      ))}
+                    </select>
+                    {!matches.some(m => m.availableAtTime) && (
+                      <span className="rides-page__hint">אין מתנדב שהזין זמינות בשעה זו. המתנדבים ממוינים לפי עיר ומספר מושבים.</span>
+                    )}
+                  </div>
+                </>
+              )}
 
               {!editTarget && (<>
                 <div className="rides-page__field">

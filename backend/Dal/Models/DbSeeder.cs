@@ -43,9 +43,9 @@ public static class DbSeeder
             new VolunteersFreeTime { VolunteerId = volunteers[1].Id, StartDateTime = nextMonday.AddDays(1).AddHours(9), EndDateTime = nextMonday.AddDays(1).AddHours(16) });
 
         db.RideRequests.AddRange(
-            new RideRequest { FamilyId = families[0].Id!.Value, RideTime = nextMonday.AddHours(9), Status = 1 },
-            new RideRequest { FamilyId = families[1].Id!.Value, VolunteerId = volunteers[0].Id, RideTime = nextMonday.AddHours(10), Status = 2 },
-            new RideRequest { FamilyId = families[2].Id!.Value, VolunteerId = volunteers[1].Id, RideTime = nextMonday.AddDays(1).AddHours(11), Status = 3 });
+            new RideRequest { FamilyId = families[0].Id!.Value, RideTime = nextMonday.AddHours(9), Status = 1, Origin = "Jerusalem, Ramot, HaPalmach 12", Destination = "Hadassah Ein Kerem" },
+            new RideRequest { FamilyId = families[1].Id!.Value, VolunteerId = volunteers[0].Id, RideTime = nextMonday.AddHours(10), Status = 2, Origin = "Jerusalem, Gilo, HaNassi 5", Destination = "Shaare Zedek Medical Center" },
+            new RideRequest { FamilyId = families[2].Id!.Value, VolunteerId = volunteers[1].Id, RideTime = nextMonday.AddDays(1).AddHours(11), Status = 3, Origin = "Bnei Brak, Rabbi Akiva 30", Destination = "Schneider Children's Medical Center, Petah Tikva" });
         db.SaveChanges();
     }
 }

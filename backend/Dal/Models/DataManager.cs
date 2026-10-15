@@ -75,6 +75,8 @@ public partial class DataManager : DbContext
             entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__3214EC07E1C4B067");
 
             entity.Property(e => e.RideTime).HasColumnType("datetime");
+            entity.Property(e => e.Origin).HasMaxLength(200).IsUnicode(true);
+            entity.Property(e => e.Destination).HasMaxLength(200).IsUnicode(true);
 
             entity.HasOne(d => d.Family).WithMany(p => p.RideRequests)
                 .HasForeignKey(d => d.FamilyId)

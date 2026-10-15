@@ -452,3 +452,22 @@
 
 .vol-page__save-btn:hover { background: var(--accent-dark); }
 .vol-page__save-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.vol-card__availability {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+.vol-card__availability-title { color: var(--text-muted, #64748b); font-weight: 600; }
+.vol-card__availability-empty { color: #b45309; }
+.vol-card__slot {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+.vol-card__details-link { margin-inline-start: auto; color: var(--teal-mid, #2a9db5); font-weight: 600; }

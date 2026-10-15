@@ -569,3 +569,14 @@
 .rides-page__filter-btn.filter-btn--status-1.active { border-color: #b91c1c; }
 .rides-page__filter-btn.filter-btn--status-2.active { border-color: #c2410c; }
 .rides-page__filter-btn.filter-btn--status-3.active { border-color: #15803d; }
+.ride-card__route {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--text-muted, #64748b);
+}
+.ride-card__route-arrow { color: var(--teal-mid, #2a9db5); font-weight: 700; }
+.ride-card__chip--unassigned { background: #fff7ed; color: #b45309; border-color: #fed7aa; }
+.rides-page__hint { display: block; margin-top: 4px; font-size: 12px; color: #b45309; }

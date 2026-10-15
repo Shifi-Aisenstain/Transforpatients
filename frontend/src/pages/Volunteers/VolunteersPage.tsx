@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom'; // ← הוסיפי
 import volunteersService from '../../services/volunteers';
 import volunteerFreeTimesService from '../../services/volunteerFreeTimesService';
@@ -23,6 +23,7 @@ const BADGE_LABELS: Record<string, string> = {
 
 const VolunteersPage: React.FC = () => {
   const [volunteers, setVolunteers] = useState<Volunteer[]>([]);
+  const [slots, setSlots] = useState<Availability[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
@@ -35,8 +36,8 @@ const VolunteersPage: React.FC = () => {
 
   const load = () => {
     setLoading(true);
-    volunteersService.getVolunteers()
-      .then(setVolunteers)
+    Promise.all([volunteersService.getVolunteers(), volunteerFreeTimesService.getAvailabilities()])
+      .then(([v, a]) => { setVolunteers(v); setSlots(a); })
       .catch(e => setError(e?.message || 'שגיאה בטעינת מתנדבים'))
       .finally(() => setLoading(false));
   };
@@ -51,6 +52,21 @@ const VolunteersPage: React.FC = () => {
       v.phoneNumber.includes(q)
     );
   }, [volunteers, search]);
+
+  const upcomingSlots = (volunteerId: number) => {
+    const now = Date.now();
+    return slots
+      .filter(s => s.volunteerId === volunteerId && new Date(s.endDateTime).getTime() >= now)
+      .sort((a, b) => new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime());
+  };
+
+  const formatSlot = (s: Availability) => {
+    const start = new Date(s.startDateTime);
+    const end = new Date(s.endDateTime);
+    const day = start.toLocaleDateString('he-IL', { weekday: 'short', day: '2-digit', month: '2-digit' });
+    const time = (d: Date) => d.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+    return `${day} ⁦${time(start)}–${time(end)}⁩`;
+  };
 
   const openAdd = () => { setEditTarget(null); setForm(EMPTY); setModalOpen(true); };
   const openEdit = (v: Volunteer) => {
@@ -194,6 +210,22 @@ const VolunteersPage: React.FC = () => {
                     {v.isBabySeat && (
                       <span className="vol-card__chip vol-card__chip--feature">{BADGE_LABELS.isBabySeat}</span>
                     )}
+                  </div>
+                  <div className="vol-card__availability">
+                    <span className="vol-card__availability-title">זמינות קרובה:</span>
+                    {upcomingSlots(v.id).length === 0 ? (
+                      <span className="vol-card__availability-empty">לא הוזנה זמינות</span>
+                    ) : (
+                      <>
+                        {upcomingSlots(v.id).slice(0, 3).map(s => (
+                          <span key={s.id} className="vol-card__slot">{formatSlot(s)}</span>
+                        ))}
+                        {upcomingSlots(v.id).length > 3 && (
+                          <span className="vol-card__availability-empty">ועוד {upcomingSlots(v.id).length - 3}</span>
+                        )}
+                      </>
+                    )}
+                    <span className="vol-card__details-link">לניהול הזמינות ←</span>
                   </div>
                 </div>
                 <button className="vol-card__edit-btn" onClick={(e) => { e.stopPropagation(); openEdit(v); }}>

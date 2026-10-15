@@ -1,4 +1,4 @@
-﻿using Dal.Models;
+using Dal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +20,10 @@ namespace Bl.Models
         public int Status { get; set; }
 
         public bool RegularRide { get; set; }
+
+        public string? Origin { get; set; }
+
+        public string? Destination { get; set; }
 
         public int? FrequencyRegularRideId { get; set; }
 

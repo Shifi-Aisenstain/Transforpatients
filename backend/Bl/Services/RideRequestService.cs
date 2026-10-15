@@ -1,4 +1,4 @@
-﻿using Bl.Api;
+using Bl.Api;
 using Bl.Models;
 using Dal.Models;
 using Dal.Services;
@@ -74,6 +74,8 @@ namespace Bl.Services
                 RideTime = f.RideTime,
                 Status = f.Status,
                 RegularRide = f.RegularRide,
+                Origin = f.Origin,
+                Destination = f.Destination,
                 FrequencyRegularRideId = f.FrequencyRegularRideId,
                 FrequencyRegularRide = f.FrequencyRegularRide,
                 Volunteer = f.Volunteer != null ? new Bl.Models.Volunteer
@@ -117,6 +119,8 @@ namespace Bl.Services
                     RideTime = f.RideTime,
                     Status = f.Status,
                     RegularRide = f.RegularRide,
+                    Origin = f.Origin,
+                    Destination = f.Destination,
                     FrequencyRegularRideId = f.FrequencyRegularRideId,
                     FrequencyRegularRide = f.FrequencyRegularRide,
                     Volunteer = f.Volunteer != null ? new Bl.Models.Volunteer
@@ -163,6 +167,8 @@ namespace Bl.Services
                     RideTime = rideTime,
                     Status = 1,
                     RegularRide = frequencyType != null,
+                    Origin = entity.Origin,
+                    Destination = entity.Destination,
                     FrequencyRegularRideId = entity.FrequencyRegularRideId
                 };
                 db.Create(dalRideRequest);
@@ -192,6 +198,8 @@ namespace Bl.Services
                 RideTime = rideRequest.RideTime,
                 Status = rideRequest.Status,
                 RegularRide = rideRequest.RegularRide,
+                Origin = rideRequest.Origin,
+                Destination = rideRequest.Destination,
                 FrequencyRegularRideId = rideRequest.FrequencyRegularRideId
             };
             db.Update(dalRideRequest);

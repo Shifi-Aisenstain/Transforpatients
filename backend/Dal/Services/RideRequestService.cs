@@ -1,4 +1,4 @@
-﻿using Dal.Api;
+using Dal.Api;
 using Dal.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -66,6 +66,10 @@ namespace Dal.Services
                 oldRideRequest.Status = rideRequest.Status;
 
                 oldRideRequest.RegularRide = rideRequest.RegularRide;
+
+                oldRideRequest.Origin = rideRequest.Origin;
+
+                oldRideRequest.Destination = rideRequest.Destination;
 
                 oldRideRequest.FrequencyRegularRideId = rideRequest.FrequencyRegularRideId;
 

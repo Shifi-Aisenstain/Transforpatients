@@ -8,6 +8,8 @@ export interface RideRequest {
   dateTime?: string;
   status: RideStatus;
   regularRide: boolean;
+  origin?: string | null;
+  destination?: string | null;
   isRecurring?: boolean;
   frequencyRegularRideId?: string | null;
   recurringInterval?: 'weekly' | 'monthly' | null;
