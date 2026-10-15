@@ -65,7 +65,7 @@ const VolunteersPage: React.FC = () => {
     const end = new Date(s.endDateTime);
     const day = start.toLocaleDateString('he-IL', { weekday: 'short', day: '2-digit', month: '2-digit' });
     const time = (d: Date) => d.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
-    return `${day} ⁦${time(start)}–${time(end)}⁩`;
+    return `${day} ⁦${time(start)}–${time(end)}⁩${s.destination ? ` ← ${s.destination}` : ''}`;
   };
 
   const openAdd = () => { setEditTarget(null); setForm(EMPTY); setModalOpen(true); };

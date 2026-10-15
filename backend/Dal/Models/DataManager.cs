@@ -125,6 +125,7 @@ public partial class DataManager : DbContext
             entity.HasKey(e => e.Id).HasName("PK__Voluntee__3214EC07C50AA870");
 
             entity.Property(e => e.EndDateTime).HasColumnType("datetime");
+            entity.Property(e => e.Destination).HasMaxLength(200).IsUnicode(true);
             entity.Property(e => e.StartDateTime).HasColumnType("datetime");
 
             entity.HasOne(d => d.Volunteer).WithMany(p => p.VolunteersFreeTimes)

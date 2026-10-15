@@ -3,4 +3,5 @@ export interface Availability {
   volunteerId: number;
   startDateTime: string;
   endDateTime: string;
+  destination?: string | null;
 }

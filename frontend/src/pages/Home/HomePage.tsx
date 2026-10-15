@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import ridesService from '../../services/rides';
 import './HomePage.css';
 
 const pages = [
@@ -49,6 +50,11 @@ const pages = [
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
+  const [waiting, setWaiting] = React.useState<number | null>(null);
+
+  React.useEffect(() => {
+    ridesService.getRides().then(r => setWaiting(r.filter(x => !x.volunteerId).length)).catch(() => setWaiting(null));
+  }, []);
 
   return (
     <div className="home-page">
@@ -62,6 +68,26 @@ const HomePage: React.FC = () => {
             <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
           </svg>
           {new Date().toLocaleDateString('he-IL', { weekday: 'long', day: 'numeric', month: 'long' })}
+        </div>
+      </div>
+
+      <div className="home-page__match" onClick={() => navigate('/matching')} role="button">
+        <div className="home-page__match-glow" />
+        <div className="home-page__match-text">
+          <span className="home-page__match-tag">חדש · מרכז ההתאמות</span>
+          <h2>התאמה חכמה בין נסיעות למתנדבים</h2>
+          <p>
+            המערכת מדרגת את המתנדבים לכל נסיעה לפי זמינות בשעה, כיוון הנסיעה, עיר מגורים ומספר מקומות,
+            ומזהה מתנדב שכבר תפוס. שיבוץ בלחיצה אחת.
+          </p>
+          <span className="home-page__match-cta">
+            {waiting === null ? 'לשיבוץ נסיעות' : `${waiting} נסיעות ממתינות לשיבוץ`} ←
+          </span>
+        </div>
+        <div className="home-page__match-demo" aria-hidden>
+          <div className="demo-row"><i style={{ width: '92%' }} /><b>92%</b></div>
+          <div className="demo-row"><i style={{ width: '70%' }} /><b>70%</b></div>
+          <div className="demo-row"><i style={{ width: '40%' }} /><b>40%</b></div>
         </div>
       </div>
 

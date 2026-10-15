@@ -1,4 +1,4 @@
-﻿using Bl.Api;
+using Bl.Api;
 using Bl.Models;
 using Dal.Api;
 using Dal.Models;
@@ -29,7 +29,8 @@ namespace Bl.Services
                 VolunteerId = volunteerFreeTime.VolunteerId,
                 //Volunteer = volunteerFreeTime.Volunteer,
                 StartDateTime = volunteerFreeTime.StartDateTime,
-                EndDateTime = volunteerFreeTime.EndDateTime
+                EndDateTime = volunteerFreeTime.EndDateTime,
+                Destination = volunteerFreeTime.Destination
             };
             return db.Create(dalvft);
         }
@@ -44,6 +45,7 @@ namespace Bl.Services
                 VolunteerId = f.VolunteerId,
                 StartDateTime = f.StartDateTime,
                 EndDateTime = f.EndDateTime,
+                Destination = f.Destination,
                 Volunteer = f.Volunteer != null ? new Bl.Models.Volunteer
                 {
                     Id = f.Volunteer.Id,
@@ -68,7 +70,8 @@ namespace Bl.Services
                 VolunteerId = vt.VolunteerId,
                 //Volunteer = vt.Volunteer,
                 StartDateTime = vt.StartDateTime,
-                EndDateTime = vt.EndDateTime
+                EndDateTime = vt.EndDateTime,
+                Destination = vt.Destination
             };
             return db.Update(dalvft);
         }

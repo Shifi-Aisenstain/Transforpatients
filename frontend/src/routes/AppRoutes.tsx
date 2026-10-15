@@ -6,6 +6,7 @@ import FamiliesPage from '../pages/Families/FamiliesPage';
 import VolunteersPage from '../pages/Volunteers/VolunteersPage';
 import VolunteerDetailPage from '../pages/Volunteers/VolunteerDetailPage';
 import RidesPage from '../pages/Rides/RidesPage';
+import MatchingPage from '../pages/Matching/MatchingPage';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const AppRoutes: React.FC = () => {
           <Route path="volunteers" element={<VolunteersPage />} />
           <Route path="volunteers/:id" element={<VolunteerDetailPage />} />
           <Route path="rides" element={<RidesPage />} />
+          <Route path="matching" element={<MatchingPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

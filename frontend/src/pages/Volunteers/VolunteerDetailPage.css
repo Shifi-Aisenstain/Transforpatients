@@ -389,3 +389,5 @@
 
 .vd__save-btn:hover { background: var(--accent-dark); }
 .vd__save-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.vd__avail-dest { margin-inline-start: 10px; padding: 2px 10px; border-radius: 999px; background: #ecfeff; color: #0e7490; border: 1px solid #a5f3fc; font-size: 12px; }

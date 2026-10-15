@@ -56,8 +56,12 @@ const RidesPage: React.FC = () => {
 
   const selectedFamily = families.find(f => f.id === form.familyId);
   const matches = useMemo(
-    () => rankVolunteers(volunteers, slots, form.rideTime, selectedFamily?.address?.city, selectedFamily?.numberOfPeople),
-    [volunteers, slots, form.rideTime, selectedFamily]
+    () => rankVolunteers(
+      volunteers, slots, rides,
+      form.rideTime ? { id: form.id, rideTime: form.rideTime, destination: form.destination } : undefined,
+      selectedFamily?.address?.city, selectedFamily?.numberOfPeople
+    ),
+    [volunteers, slots, rides, form.id, form.rideTime, form.destination, selectedFamily]
   );
 
   const onFamilyChange = (id: number) => {
@@ -347,7 +351,9 @@ const RidesPage: React.FC = () => {
                         <option key={m.volunteer.id} value={m.volunteer.id}>
                           {`${m.volunteer.firstName ?? ''} ${m.volunteer.lastName}`.trim()}
                           {` — ${m.availableAtTime ? 'פנוי/ה בשעה זו' : 'לא פנוי/ה בשעה זו'}`}
+                          {m.directionMatch ? ' · בכיוון הנסיעה' : ''}
                           {m.sameCity ? ' · אותה עיר' : ''}
+                          {m.busy ? ' · תפוס/ה בנסיעה אחרת' : ''}
                           {` · ${m.volunteer.availableSeats ?? 0} מושבים`}
                           {m.enoughSeats ? '' : ' (לא מספיק)'}
                         </option>

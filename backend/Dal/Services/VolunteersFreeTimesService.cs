@@ -1,4 +1,4 @@
-﻿using Dal.Api;
+using Dal.Api;
 using Dal.Models;
 using Microsoft.EntityFrameworkCore;
 namespace Dal.Services
@@ -44,6 +44,7 @@ namespace Dal.Services
             vftForUpdate.Volunteer = vft.Volunteer;
             vftForUpdate.StartDateTime = vft.StartDateTime;
             vftForUpdate.EndDateTime = vft.EndDateTime;
+            vftForUpdate.Destination = vft.Destination;
             db.SaveChanges();
             return true;
         }

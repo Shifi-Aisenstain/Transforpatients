@@ -1,4 +1,4 @@
-﻿using Dal.Models;
+using Dal.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +17,8 @@ namespace Bl.Models
         public DateTime StartDateTime { get; set; }
 
         public DateTime EndDateTime { get; set; }
+
+        public string? Destination { get; set; }
 
         public Bl.Models.Volunteer? Volunteer { get; set; } 
     }

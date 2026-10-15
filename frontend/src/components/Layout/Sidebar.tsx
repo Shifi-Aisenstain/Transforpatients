@@ -33,8 +33,16 @@ const RideIcon = () => (
   </svg>
 );
 
+const MatchIcon = () => (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/>
+    <path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16z"/>
+  </svg>
+);
+
 const links = [
   { to: '/', icon: <HomeIcon />, label: 'דף הבית', end: true },
+  { to: '/matching', icon: <MatchIcon />, label: 'מרכז ההתאמות', end: false, featured: true },
   { to: '/families', icon: <FamilyIcon />, label: 'משפחות', end: false },
   { to: '/volunteers', icon: <VolunteerIcon />, label: 'מתנדבים', end: false },
   { to: '/rides', icon: <RideIcon />, label: 'נסיעות', end: false },
@@ -43,12 +51,12 @@ const links = [
 const Sidebar: React.FC = () => (
   <aside className="sidebar">
     <div className="sidebar__nav">
-      {links.map(({ to, icon, label, end }) => (
+      {links.map(({ to, icon, label, end, featured }) => (
         <NavLink
           key={to}
           to={to}
           end={end}
-          className={({ isActive }) => `sidebar__link${isActive ? ' active' : ''}`}
+          className={({ isActive }) => `sidebar__link${isActive ? ' active' : ''}${featured ? ' sidebar__link--featured' : ''}`}
         >
           <span className="sidebar__icon-wrap">{icon}</span>
           {label}

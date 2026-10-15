@@ -76,7 +76,7 @@ const VolunteerDetailPage: React.FC = () => {
   const openAvailEdit = (a: Availability) => { setEditAvailTarget(a); setAvailForm({ ...a }); setAvailModalOpen(true); };
   const openEdit = (a: Availability) => {
     setEditAvail(a);
-    setEditForm({ startDateTime: a.startDateTime, endDateTime: a.endDateTime });
+    setEditForm({ startDateTime: a.startDateTime, endDateTime: a.endDateTime, destination: a.destination ?? '' });
   };
 
   const setAvail = (field: keyof Availability, value: any) =>
@@ -93,6 +93,7 @@ const VolunteerDetailPage: React.FC = () => {
         volunteerId: editAvail.volunteerId,
         startDateTime: editForm.startDateTime,
         endDateTime: editForm.endDateTime,
+        destination: editForm.destination ?? null,
       });
       setAvailabilities(prev => prev.map(a =>
         a.id === editAvail.id ? { ...a, ...editForm } : a
@@ -158,6 +159,7 @@ const VolunteerDetailPage: React.FC = () => {
                   <span>{formatDate(a.startDateTime)} {formatTime(a.startDateTime)}</span>
                   <span className="vd__avail-arrow">←</span>
                   <span>{formatDate(a.endDateTime)} {formatTime(a.endDateTime)}</span>
+                  {a.destination && <span className="vd__avail-dest">נוסע לכיוון: {a.destination}</span>}
                 </div>
                 <div className="vd__avail-actions">
                   <button className="vd__btn-edit" onClick={() => openEdit(a)}>✏️ עריכה</button>
@@ -209,6 +211,15 @@ const VolunteerDetailPage: React.FC = () => {
                   onChange={e => setEditForm(prev => ({ ...prev, endDateTime: e.target.value }))}
                 />
               </div>
+              <div className="vd__field">
+                <label>יעד / כיוון הנסיעה</label>
+                <input
+                  className="vd__input"
+                  value={editForm.destination ?? ''}
+                  onChange={e => setEditForm(prev => ({ ...prev, destination: e.target.value }))}
+                  placeholder="למשל: ירושלים, תל אביב והמרכז"
+                />
+              </div>
             </div>
             <div className="vd__modal-footer">
               <button className="vd__cancel-btn" onClick={closeEdit}>ביטול</button>
@@ -254,6 +265,10 @@ const VolunteerDetailPage: React.FC = () => {
               <div className="vol-page__field">
                 <label className="vol-page__label">סיום <span className="vol-page__req">*</span></label>
                 <input className="vol-page__input" type="datetime-local" value={availForm.endDateTime || ''} onChange={e => setAvail('endDateTime', e.target.value)} />
+              </div>
+              <div className="vol-page__field">
+                <label className="vol-page__label">יעד / כיוון הנסיעה</label>
+                <input className="vol-page__input" value={availForm.destination || ''} onChange={e => setAvail('destination', e.target.value)} placeholder="למשל: ירושלים, תל אביב והמרכז" />
               </div>
             </div>
 
