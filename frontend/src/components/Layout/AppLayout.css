@@ -1,0 +1,99 @@
+.app-layout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  overflow: hidden;
+  background: transparent;
+}
+
+.app-layout__body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.app-layout__main {
+  flex: 1;
+  padding: 28px 36px;
+  overflow-y: auto;
+  min-height: 0;
+  box-sizing: border-box;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  background-color: #f4fafb;
+  background-image: radial-gradient(circle, rgba(42,157,181,0.25) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+}
+
+.app-layout__main > * {
+  width: 100%;
+  max-width: 1020px;
+  margin: 0 auto;
+}
+
+/* ── Footer ── */
+.app-footer {
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #1a3a52 0%, #1e5068 100%);
+  border-top: 1px solid var(--border);
+}
+
+.app-footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 12px 32px;
+  flex-wrap: wrap;
+  direction: rtl;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.app-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-footer__logo {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #2a9db5, #2baa9e);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.app-footer__name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #cffafe;
+  letter-spacing: -0.3px;
+}
+
+.app-footer__copy {
+  font-size: 12px;
+  color: #7fb8cc;
+  text-align: center;
+  flex: 1;
+}
+
+.app-footer__links {
+  display: flex;
+  gap: 18px;
+  font-size: 12px;
+  color: #7fb8cc;
+}
+
+.app-footer__links span {
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.app-footer__links span:hover { color: #cffafe; }

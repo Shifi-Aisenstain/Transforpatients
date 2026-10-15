@@ -1,0 +1,391 @@
+.vd {
+  direction: rtl;
+  padding: 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.vd__top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vd__back {
+  align-self: flex-start;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  padding: 7px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.vd__back:hover {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* פרטי מתנדב */
+.vd__header-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  box-shadow: var(--shadow-md);
+}
+
+.vd__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2baa9e, #0891b2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+  border: 2px solid var(--teal-soft);
+  box-shadow: 0 2px 8px rgba(43,170,158,0.2);
+}
+
+.vd__name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.vd__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.vd__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.vd__chip--green {
+  background: #f0fdf4;
+  color: var(--success);
+  border-color: rgba(5,150,105,0.2);
+}
+
+.vd__chip--done {
+  background: var(--bg);
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+/* Body — שני עמודות */
+.vd__body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Section */
+.vd__section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.vd__add-avail-btn {
+  background: var(--teal-mid);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  margin-inline-start: auto;
+}
+
+.vd__section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent-dark);
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--teal-soft);
+}
+
+.vd__empty {
+  padding: 40px 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* זמנים פנויים */
+.vd__avail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.vd__avail-row:last-child { border-bottom: none; }
+.vd__avail-row:hover { background: var(--bg-card-hover); }
+
+.vd__avail-dates {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+  flex-wrap: wrap;
+}
+
+.vd__avail-arrow {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.vd__avail-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.vd__btn-edit {
+  padding: 5px 14px;
+  border-radius: 50px;
+  border: 1.5px solid rgba(43,170,158,0.3);
+  background: var(--teal-soft);
+  color: var(--accent-dark);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.vd__btn-edit:hover { background: var(--cyan-soft); }
+
+.vd__btn-delete {
+  padding: 5px 14px;
+  border-radius: 50px;
+  border: 1.5px solid rgba(220,38,38,0.2);
+  background: #fef2f2;
+  color: var(--danger);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.vd__btn-delete:hover { background: #fee2e2; }
+
+/* נסיעות */
+.vd__ride-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.vd__ride-row:last-child { border-bottom: none; }
+.vd__ride-row:hover { background: var(--bg-card-hover); }
+
+.vd__ride-date {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.vd__ride-time {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Loading / Error */
+.vd__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 14px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.vd__spinner {
+  width: 34px;
+  height: 34px;
+  border: 3px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: 50%;
+  animation: vd-spin 0.8s linear infinite;
+}
+
+@keyframes vd-spin { to { transform: rotate(360deg); } }
+
+.vd__error {
+  padding: 40px;
+  text-align: center;
+  color: var(--danger);
+  font-size: 15px;
+}
+
+.vd__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12,35,64,0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.vd__modal {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 420px;
+  direction: rtl;
+  overflow: hidden;
+  animation: vd-modal-in 0.18s ease;
+}
+
+@keyframes vd-modal-in {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.vd__modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+  background: var(--teal-soft);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--accent-dark);
+}
+
+.vd__close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-muted);
+  line-height: 1;
+  padding: 2px;
+  transition: color 0.15s;
+}
+
+.vd__close-btn:hover { color: var(--text); }
+
+.vd__modal-body {
+  padding: 20px 22px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.vd__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.vd__field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.vd__input {
+  width: 100%;
+  padding: 9px 13px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  font-size: 14px;
+  outline: none;
+  color: var(--text);
+  background: var(--bg);
+  box-sizing: border-box;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.vd__input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(13,148,136,0.1);
+  background: #fff;
+}
+
+.vd__modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 22px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.vd__cancel-btn {
+  padding: 9px 20px;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-weight: 600;
+  transition: background 0.15s;
+}
+
+.vd__cancel-btn:hover { background: var(--bg); }
+
+.vd__save-btn {
+  padding: 9px 24px;
+  border-radius: 50px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(43,170,158,0.18);
+  transition: background 0.15s;
+}
+
+.vd__save-btn:hover { background: var(--accent-dark); }
+.vd__save-btn:disabled { opacity: 0.55; cursor: not-allowed; }

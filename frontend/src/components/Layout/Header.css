@@ -1,0 +1,264 @@
+.header {
+  min-height: var(--header-height);
+  background: #ffffff;
+  border-bottom: 2px solid var(--border-strong);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  padding: 10px 32px 10px 0;
+}
+
+.header__logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  flex-shrink: 0;
+  width: var(--sidebar-width);
+  padding: 0 16px 0 32px;
+  box-sizing: border-box;
+}
+
+.header__logo-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #2a9db5 0%, #2baa9e 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(42,157,181,0.22);
+}
+
+.header__logo-text {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.4px;
+}
+
+.header__logo-accent {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: -0.4px;
+}
+
+.header__search-wrap {
+  flex: 1;
+  max-width: 340px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.header__search-icon {
+  position: absolute;
+  right: 13px;
+  pointer-events: none;
+  color: var(--text-muted);
+}
+
+.header__search-input {
+  width: 100%;
+  padding: 9px 40px 9px 16px;
+  border-radius: 50px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+  box-sizing: border-box;
+}
+
+.header__search-input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(42,157,181,0.10);
+  background: #fff;
+}
+
+.header__search-input::placeholder { color: var(--text-muted); }
+
+.header__date-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.header__date-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #e8f8fb 0%, #f0fdf9 100%);
+  border: 1.5px solid var(--border-strong);
+  border-radius: 50px;
+  padding: 8px 18px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(42,157,181,0.10);
+}
+
+.header__date-badge:hover {
+  background: linear-gradient(135deg, #d4f3f9 0%, #e0faf4 100%);
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px rgba(42,157,181,0.18);
+  transform: translateY(-1px);
+}
+
+.header__date-badge:active {
+  transform: translateY(0);
+}
+
+.header__date-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(135deg, #2a9db5, #2baa9e);
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(42,157,181,0.25);
+}
+
+.header__date-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: -0.1px;
+}
+
+.header__cal-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: auto;
+  right: 0;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  z-index: 200;
+  padding: 12px;
+  animation: cal-drop 0.15s ease;
+}
+
+.header__cal-popover::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 24px;
+  left: auto;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-top: 1.5px solid var(--border);
+  border-left: 1.5px solid var(--border);
+  transform: rotate(45deg);
+}
+
+/* ── DayPicker overrides ── */
+.header__daypicker {
+  --rdp-accent-color: var(--primary);
+  --rdp-background-color: var(--teal-soft);
+  --rdp-accent-color-dark: var(--primary-dark);
+  --rdp-outline: 2px solid var(--primary);
+  --rdp-outline-selected: 2px solid var(--primary-dark);
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  font-size: 13px;
+  direction: rtl;
+}
+
+.header__daypicker .rdp-months {
+  justify-content: center;
+}
+
+.header__daypicker .rdp-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+
+.header__daypicker .rdp-caption_label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.header__daypicker .rdp-nav_button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.header__daypicker .rdp-nav_button:hover {
+  background: var(--teal-soft);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.header__daypicker .rdp-head_cell {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-bottom: 6px;
+}
+
+.header__daypicker .rdp-day {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  transition: background 0.15s, color 0.15s;
+}
+
+.header__daypicker .rdp-day:hover:not(.rdp-day_selected):not(.rdp-day_outside) {
+  background: var(--teal-soft);
+  color: var(--primary);
+}
+
+.header__daypicker .rdp-day_selected {
+  background: linear-gradient(135deg, var(--primary), var(--accent)) !important;
+  color: #fff !important;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(42,157,181,0.35);
+}
+
+.header__daypicker .rdp-day_today:not(.rdp-day_selected) {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.header__daypicker .rdp-day_outside {
+  color: var(--border-strong);
+}

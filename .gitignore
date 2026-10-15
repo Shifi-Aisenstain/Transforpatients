@@ -1,0 +1,21 @@
+# .NET
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.mdf
+*.ldf
+
+# Node / React
+node_modules/
+frontend/build/
+.env
+.env.local
+npm-debug.log*
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
