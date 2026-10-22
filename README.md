@@ -15,6 +15,12 @@ The UI is in Hebrew (RTL).
 | **Volunteers** | **Rides** |
 | ![Volunteers](docs/screenshots/volunteers.jpg) | ![Rides](docs/screenshots/rides.jpg) |
 
+### AI assistant
+
+| Fill the new-ride form from a pasted message | Explanation and a ready message for the best match |
+|---|---|
+| ![AI request intake](docs/screenshots/ai-intake.jpg) | ![AI match explanation](docs/screenshots/ai-explanation.jpg) |
+
 ## Tech stack
 
 - **Backend:** C#, .NET 8, ASP.NET Core Web API, Entity Framework Core, SQL Server (LocalDB), Swagger

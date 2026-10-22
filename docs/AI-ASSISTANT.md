@@ -10,6 +10,10 @@ Two features that save the coordinator typing and writing, built on a free Gemin
    in a few sentences why the top volunteer fits (and what is missing, and who is the alternative), and drafts a message to the volunteer
    that can be edited, copied or opened in WhatsApp.
 
+| Request intake | Match explanation |
+|---|---|
+| ![AI request intake](screenshots/ai-intake.jpg) | ![AI match explanation](screenshots/ai-explanation.jpg) |
+
 ## The AI does not choose the volunteer
 
 The ranking and the percentages are computed by the app (`frontend/src/utils/matching.ts`). The AI only **phrases** that result and
