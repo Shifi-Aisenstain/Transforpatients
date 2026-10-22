@@ -8,6 +8,8 @@ import { RideRequest, RideStatus } from '../../models/rideRequest';
 import { Family } from '../../models/family';
 import { Volunteer } from '../../models/volunteer';
 import { Availability } from '../../models/Availability';
+import { ParsedRideRequest } from '../../models/rideAssistant';
+import AiIntakePanel from '../../components/Rides/AiIntakePanel';
 import './RidesPage.css';
 
 const STATUS_LABEL: Record<RideStatus, string> = { 1: 'חדשה', 2: 'בטיפול', 3: 'אושרה' }; const INTERVAL_LABEL: Record<string, string> = { Weekly: 'שבועי', Monthly: 'חודשי' };
@@ -63,6 +65,31 @@ const RidesPage: React.FC = () => {
     ),
     [volunteers, slots, rides, form.id, form.rideTime, form.destination, selectedFamily]
   );
+
+  // Fills the form from a message parsed by the AI. The coordinator reviews and completes it before saving.
+  const applyParsed = (p: ParsedRideRequest): string[] => {
+    const notices: string[] = [];
+    const wanted = p.familyLastName?.trim();
+    const family = wanted ? families.find(f => f.lastName.trim() === wanted) : undefined;
+    if (wanted && !family) notices.push(`לא נמצאה במערכת משפחת ${wanted} - נא לבחור משפחה ידנית.`);
+
+    const parsedOrigin = [p.fromStreet, p.fromNeighborhood, p.fromCity].filter(Boolean).join(', ');
+    // an exact pickup address in the message wins; otherwise the family's address is the default
+    const origin = p.fromStreet ? parsedOrigin : (family ? familyAddress(family) : '') || parsedOrigin;
+
+    setForm(prev => ({
+      ...prev,
+      familyId: family ? family.id : prev.familyId,
+      rideTime: p.start ? p.start.slice(0, 16) : prev.rideTime,
+      origin: origin || prev.origin,
+      destination: p.destination ?? prev.destination,
+      regularRide: p.isRecurring,
+      // the select of this page uses the server values Weekly / Monthly, although the model type says lowercase
+      recurringInterval: (p.isRecurring ? p.frequency ?? null : null) as any,
+      times: p.isRecurring ? p.occurrences ?? 1 : 1,
+    }));
+    return notices;
+  };
 
   const onFamilyChange = (id: number) => {
     const fam = families.find(f => f.id === id);
@@ -276,6 +303,7 @@ const RidesPage: React.FC = () => {
             </div>
 
             <div className="rides-page__modal-body">
+              {!editTarget && <AiIntakePanel onParsed={applyParsed} />}
               <div className="rides-page__field">
                 <label className="rides-page__label">משפחה <span className="rides-page__req">*</span></label>
                 <select

@@ -1,0 +1,125 @@
+.ai-match {
+  background: var(--primary-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin: 0 0 14px;
+}
+
+.ai-match__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ai-match__title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.ai-match__btn {
+  border: 0;
+  border-radius: 50px;
+  padding: 7px 16px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--teal-mid);
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.ai-match__btn:hover:not(:disabled) {
+  background: var(--primary);
+}
+
+.ai-match__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ai-match__btn--ghost {
+  background: #fff;
+  color: var(--text-secondary);
+  border: 1.5px solid var(--border);
+}
+
+.ai-match__btn--ghost:hover:not(:disabled) {
+  background: var(--cyan-soft);
+}
+
+.ai-match__summary {
+  margin-top: 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+}
+
+.ai-match__summary p {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.ai-match__badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 50px;
+  background: var(--bg);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.ai-match__badge--ai {
+  background: var(--teal-soft);
+  color: var(--primary-dark);
+}
+
+.ai-match__label {
+  display: block;
+  margin: 12px 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.ai-match__text {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px 13px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  font: inherit;
+  font-size: 14px;
+  color: var(--text);
+  background: #fff;
+  resize: vertical;
+  outline: none;
+}
+
+.ai-match__text:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(42, 157, 181, 0.15);
+}
+
+.ai-match__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.ai-match__error {
+  margin-top: 8px;
+  color: var(--danger);
+  font-size: 13px;
+}

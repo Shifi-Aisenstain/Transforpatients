@@ -8,6 +8,7 @@ import { Family } from '../../models/family';
 import { Volunteer } from '../../models/volunteer';
 import { Availability } from '../../models/Availability';
 import { rankVolunteers, VolunteerMatch, MAX_SCORE, WEIGHTS } from '../../utils/matching';
+import AiMatchHelper from '../../components/Matching/AiMatchHelper';
 import './MatchingPage.css';
 
 type Tab = 'waiting' | 'pending' | 'approved';
@@ -220,6 +221,10 @@ const MatchingPage: React.FC = () => {
                 <div className="match-legend">
                   ציון ההתאמה (מתוך {MAX_SCORE}): פנוי בשעה {WEIGHTS.available} · כיוון נסיעה {WEIGHTS.direction} · אותה עיר {WEIGHTS.city} · מקומות {WEIGHTS.seats} · תפוס בנסיעה אחרת -{WEIGHTS.available}
                 </div>
+
+                {!selected.volunteerId && (
+                  <AiMatchHelper key={selected.id} ride={selected} passengers={selectedFamily?.numberOfPeople} matches={matches} />
+                )}
 
                 <div className="match-vols">
                   {matches.map((m, i) => {

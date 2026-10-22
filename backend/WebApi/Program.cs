@@ -52,6 +52,15 @@ namespace WebApi
             builder.Services.AddScoped<Dal.Services.VolunteerService>();
             builder.Services.AddScoped<Bl.Services.VolunteerService>();
 
+            // AI-assisted features (request intake from text, explanation of the best match).
+            // The API key is NOT stored in the repository: dotnet user-secrets set "Llm:ApiKey" "<key>"  (or the environment variable Llm__ApiKey).
+            // Without a key the app works as before and the explanation is built from a template.
+            var llmOptions = builder.Configuration.GetSection("Llm").Get<Bl.Llm.LlmOptions>() ?? new Bl.Llm.LlmOptions();
+            builder.Services.AddSingleton(llmOptions);
+            builder.Services.AddHttpClient<Bl.Llm.ILlmClient, Bl.Llm.OpenAiCompatibleLlmClient>();
+            builder.Services.AddScoped<Bl.Matching.RideRequestParser>();
+            builder.Services.AddScoped<Bl.Matching.MatchExplainer>();
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
